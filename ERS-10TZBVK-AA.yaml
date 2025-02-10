@@ -1,0 +1,83 @@
+blueprint:
+  name: Zigbee2MQTT - ERS-10TZBVK-AA Knob Events only
+  description: Zigbee Smart knob
+  domain: automation
+  input:
+    mqtt_entity:
+      description: The "friendly" ERS-10TZBVK-AA device name as is registered in zigbee2mqtt
+      name: Name
+    base_topic:
+      description: The base topic as defined in the zigbee2mqtt config
+      default: zigbee2mqtt
+      name: Base Topic
+    
+    event_single:
+      name: Event | Single Press
+      description: Action to run on single press in event mode
+      default: []
+      selector:
+        action: {}
+    event_double:
+      name: Event | Double Press
+      description: Action to run on double press in event mode
+      default: []
+      selector:
+        action: {}
+    event_hold:
+      name: Event | Hold Press
+      description: Action to run on hold press in event mode
+      default: []
+      selector:
+        action: {}
+    event_rotate_left:
+      name: Event | Rotate Left
+      description: Action to run on rotate left in event mode
+      default: []
+      selector:
+        action: {}
+    event_rotate_right:
+      name: Event | Rotate Right
+      description: Action to run on rotate right in event mode
+      default: []
+      selector:
+        action: {}
+
+mode: single
+max_exceeded: silent
+
+trigger_variables:
+
+  base_topic:  !input base_topic
+
+trigger:
+  - platform: mqtt
+    topic: "{{ base_topic  ~ '/' ~ mqtt_entity ~ '/action' }}"
+
+###### https://manuals.plus/earda-technologies/ers-10tzbvk-aa-smart-knob-manual
+### Event
+# single
+# double
+# hold                        // > 10 sec hold
+# rotate_left
+# rotate_right
+
+action:
+  - variables:
+      platform: "{{ trigger.platform }}"
+      payload:  "{{ trigger.payload_json.action }}"
+  - choose:
+      - conditions:
+          - "{{ platform == 'mqtt' and payload == 'single' }}"
+        sequence: !input "event_single"
+      - conditions:
+          - "{{ platform == 'mqtt' and payload == 'double' }}"
+        sequence: !input "event_double"
+      - conditions:
+          - "{{ platform == 'mqtt' and payload == 'hold' }}"
+        sequence: !input "event_hold"
+      - conditions:
+          - "{{ platform == 'mqtt' and payload == 'rotate_left' }}"
+        sequence: !input "event_rotate_left"
+      - conditions:
+          - "{{ platform == 'mqtt' and payload == 'rotate_right' }}"
+        sequence: !input "event_rotate_right"
