@@ -1,25 +1,18 @@
 blueprint:
   name: Zigbee2MQTT - ERS-10TZBVK-AA (Events only)
   description: >
-    This blueprint allows you to create automations for the ERS-10TZBVK-AA smart knob using MQTT.
-    It listens for MQTT events and maps them to Home Assistant actions.
-
-    **No Commands mode, only event mode**
-    
-    **Supported Actions:**
-    - Single Press
-    - Double Press
-    - Hold Press
-    - Rotate Left/Right
-    
-    **Setup:**
-    - Ensure your knob is correctly configured in `zigbee2mqtt`.
-    - Select the correct MQTT topic and device name.
-
-    ![Smart Knob](https://github.com/bodydoc/ha-blueprints/raw/main/assets/knob.png)
-    ![Friendly name](https://github.com/bodydoc/ha-blueprints/raw/main/assets/friendly_name.png)
-
-    Credits to @rdeangel and @pbergman for the blueprint
+      **Blueprint 'Zigbee2MQTT - ERS-10TZBVK-AA (Events only)'**<br>
+      This blueprint allows you to create automations for the ERS-10TZBVK-AA smart knob using MQTT.<br><br>
+      **No Commands mode, only event mode**<br><br>
+      **Supported Actions:**<br>
+      - Single Press<br>
+      - Double Press<br>
+      - Hold Press<br>
+      - Rotate Left/Right<br><br>
+      **Setup:**<br>
+      - Ensure your knob is correctly configured in `zigbee2mqtt`.<br>
+      - Select the correct MQTT topic and device name.<br>
+      Credits to @rdeangel and @pbergman for the blueprint
   domain: automation
   input:
     mqtt_entity:
